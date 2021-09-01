@@ -23,7 +23,8 @@ namespace FiorellaHomeWork.Controllers
                 Slides = await _context.Slides.ToListAsync(),
                 Introduction = await _context.Introduction.FirstOrDefaultAsync(),
                 Categories = await _context.categories.Where(c=>c.IsDeleted==false).ToListAsync(),
-                Products = await _context.Products.Include(p=>p.Images).Include(p=>p.Category).ToListAsync()
+                Products = await _context.Products.Include(p=>p.Images).Include(p=>p.Category).OrderByDescending(p=>p.Id).
+                Take(8).ToListAsync()
             };
 
             return View(homevm);
