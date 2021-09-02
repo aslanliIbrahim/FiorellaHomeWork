@@ -1,20 +1,35 @@
 $(document).ready(function () {
     let skip = 12;
     let take = 8;
-    let product_count = $("#proCount").val(); 
-    $(document).on("click", "#LoadMore", function () {
-        $.ajax({
-            url: `/Product/LoadMore?skip=${skip}&take=${take}`,
-            type: "Get",
-            success: function (res) {
-                $(".ProductParent").append(res);
-                skip += take;
-                if (skip >= product_count) {
-                    $("#LoadMore").remove();
+
+    let product_count = $("#proCount").val();
+    window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY;
+        const scrolling = document.documentElement.scrollHeight-window.innerHeight;
+        console.log(scrolling)
+        if (scrolled === scrolling) {
+            $.ajax({
+                url: `/Product/LoadMore?skip=${skip}&take=${take}`,
+                type: "Get",
+                success: function (res) {
+                    $(".ProductParent").append(res);
+                    skip += take;
                 }
-            }
-        })
-    })
+            })
+        }
+
+    });
+   
+    //$(document).on("scroll", function () {
+    //    $.ajax({
+    //        url: `/Product/LoadMore?skip=${skip}&take=${take}`,
+    //        type: "Get",
+    //        success: function (res) {
+    //            $(".ProductParent").append(res);
+    //            skip += take;
+    //        }
+    //    })
+    //})
     // HEADER
 
     $(document).on('click', '#search', function () {
