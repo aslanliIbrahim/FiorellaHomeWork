@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     });
    
-    //$(document).on("scroll", function () {
+    //$(document).on("onclick", function () {
     //    $.ajax({
     //        url: `/Product/LoadMore?skip=${skip}&take=${take}`,
     //        type: "Get",
