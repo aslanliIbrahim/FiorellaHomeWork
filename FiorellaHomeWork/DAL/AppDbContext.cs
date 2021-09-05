@@ -9,7 +9,7 @@ namespace FiorellaHomeWork.DAL
 {
     public class AppDbContext:DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
@@ -18,5 +18,9 @@ namespace FiorellaHomeWork.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> categories { get; set; }
         public DbSet<ProductImage> productImages { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<HeaderLogo> headerLogos { get; set; }
+
+
     }
 }
