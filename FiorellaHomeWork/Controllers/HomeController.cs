@@ -1,9 +1,11 @@
 ﻿using FiorellaHomeWork.DAL;
+using FiorellaHomeWork.Models;
 using FiorellaHomeWork.ViewComponents;
 using FiorellaHomeWork.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +43,70 @@ namespace FiorellaHomeWork.Controllers
             return View(homevm);
         }
 
-        public IActionResult AddBasket(int? id)
+        public IActionResult AddBasket(int id)
         {
+            Product product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null) return NotFound();
+
+            string basket = HttpContext.Request.Cookies["basket"];
+            if (basket == null)
+            {
+                List<CookieItemViewModel> products = new List<CookieItemViewModel>();
+                products.Add(new CookieItemViewModel
+                {
+                    Id  = product.Id,
+                    Count = 1
+                });
+                string basketStr = JsonConvert.SerializeObject(products);
+                HttpContext.Response.Cookies.Append("basket", basketStr);
+            }
+            else
+            { 
+                List<CookieItemViewModel> products = JsonConvert.DeserializeObject<List<CookieItemViewModel>>(basket);
+                CookieItemViewModel cookieItem = products.FirstOrDefault(p => p.Id == product.Id);
+                if (cookieItem == null)
+                {
+                    products.Add(new CookieItemViewModel
+                    {
+                        Id = product.Id,
+                        Count = 1
+                    });
+                }
+                else
+                {
+                    cookieItem.Count++;
+                }
+                string basketStr = JsonConvert.SerializeObject(products);
+                HttpContext.Response.Cookies.Append("basket", basketStr);
+            }
+
+           
+            return RedirectToAction("Index", "Home");
             //string sesionData = HttpContext.Session.GetString("name");
-            List<AddBasket> cookieData =
-                JsonSerializer.Deserialize<List<AddBasket>>(Request.Cookies["basket"]);
-            return View(cookieData);/*Json(cookieData);*/ /*RedirectToAction(nameof(Index));*/
+            //List<AddBasket> cookieData =
+            //    JsonSerializer.Deserialize<List<AddBasket>>(Request.Cookies["basket"]);
+            //return View(cookieData);/*Json(cookieData);*/ /*RedirectToAction(nameof(Index));*/
+        }
+        public IActionResult ShowBasket()
+        {
+            return Content(HttpContext.Request.Cookies["basket"]);
+        }
+
+        public ActionResult RemoveItem(int id)
+        {
+            string basket = HttpContext.Request.Cookies["basket"];
+            List<CookieItemViewModel> products = JsonConvert.DeserializeObject<List<CookieItemViewModel>>(basket);
+            foreach (var item in products)
+            {
+                if (item.Id == id)
+                {
+                    products.Remove(item);
+                    break;
+                }
+            }
+            string basketStr = JsonConvert.SerializeObject(products);
+            HttpContext.Response.Cookies.Append("basket", basketStr);
+            return RedirectToAction("Index","Home");
         }
     }
 }
