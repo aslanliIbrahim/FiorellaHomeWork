@@ -11,7 +11,7 @@ namespace FiorellaHomeWork.Areas.AdminPanel.Controllers
     {
         
         public IActionResult Index()
-        {
+        {   
             return View();
         }
     }

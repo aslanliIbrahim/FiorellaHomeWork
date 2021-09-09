@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+    int count = 1;
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Bordered Table</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="col-12 my-3 mx-3">
+        <a asp-action="Create" class="btn btn-success">Create</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Task</th>
+                    <th>Progress</th>
+                    <th style="width: 40px">Label</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cg in Model)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @cg.Name
+                        </td>
+                        <td>
+                            <a asp-action="Detail" asp-route-id="@cg.Id" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Update" asp-route-id="@cg.Id" class="btn btn-success"><i class="fas fa-wrench"></i></a>
+                            <a asp-action="Delete" asp-route-id="@cg.Id" class="btn btn-danger"><i class="fas fa-trash (@cg.IsDeleted? "fas fa-check-circle":"fas fa-trash")"></i></a>
+                        </td>
+                        <td>
+                            @(cg.IsDeleted? "Deleted":"Active")
+                        </td>
+                    </tr>
+                    count++;
+                }
+
+                @*<tr>
+            <td>2.</td>
+            <td>IsDeleted</td>
+            <td>
+                <div class="progress progress-xs">
+                    <div class="progress-bar bg-warning" style="width: 70%"></div>
+                </div>
+            </td>
+            <td><span class="badge bg-warning">70%</span></td>
+        </tr>
+        <tr>
+            <td>3.</td>
+            <td>Settings</td>
+            <td>
+                <div class="progress progress-xs">
+                    <div class="progress-bar bg-warning" style="width: 70%"></div>
+                </div>
+            </td>
+            <td><span class="badge bg-warning">70%</span></td>
+        </tr>*@
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
+
