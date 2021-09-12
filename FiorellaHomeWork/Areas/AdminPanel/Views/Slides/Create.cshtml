@@ -1,0 +1,18 @@
+﻿@model Slide
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form class="forms-sample" method="post" enctype="multipart/form-data" accept="image/*">
+    <div class="form-group">
+        <label asp-for="Photos">Name</label>
+        <input multiple asp-for="Photos" class="form-control" placeholder="Name">
+        <span asp-validation-for="Photos" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mr-2">Create</button>
+    <button class="btn btn-primary mr-2">Cancel</button>
+</form>
+@section Script{
+    <partial name="_ValidationPartial"/>
+}
+

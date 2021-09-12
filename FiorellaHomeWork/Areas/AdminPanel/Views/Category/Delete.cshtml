@@ -1,0 +1,27 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Update";
+}
+
+<form class="forms-sample"  method="post">
+    <div class="form-group">
+        <label asp-for="Name">@Model.Name</label>
+        @if (Model.IsDeleted)
+        {
+            <p class="text-danger">Delete</p>
+            <button type="submit" class="btn btn-success mr-2">Activated</button>
+            <button class="btn btn-primary mr-2">Cancel</button>
+
+        }
+        else
+        {
+            <p class="text-success">Active</p>
+            <button type="submit" class="btn btn-danger mr-2">Delete</button>
+            <button class="btn btn-primary mr-2">Cancel</button>
+        }
+    </div>
+</form>
+@section Script{
+    <partial name="_ValidationPartial" />
+}
+
