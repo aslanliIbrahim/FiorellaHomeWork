@@ -35,7 +35,7 @@
                             <td>
 
                                 <a asp-action="Update" asp-route-id="@slide.Id" class="btn btn-success"><i class="fas fa-wrench"></i></a>
-                                <a asp-action="DeleteImage" asp-route-id="@slide.Id" class="btn btn-danger"><i class="fas fa-trash" fas fa-check-circle":"fas fa-trash"></i></a>
+                               <form> <button asp-action="DeleteImage"-- asp-route-id="@slide.Id" class="btn btn-danger"><i class="fas fa-trash" fas fa-check-circle":"fas fa-trash"></i></button> </form>
                             </td>
 
                         </tr>

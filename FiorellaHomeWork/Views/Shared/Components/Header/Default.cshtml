@@ -128,16 +128,26 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item my-auto search">
-                                <i class="fas fa-search" id="search"></i>
-                                <ul class="list-unstyled py-3">
-                                    <li class="d-flex px-3">
-                                        <input id="input-search" type="text" placeholder="Search">
-                                        <i class="fas fa-search my-auto" id="search"></i>
-                                    </li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item my-auto search">
+                                    <i class="fas fa-search" id="search"></i>
+                                    <ul class="list-unstyled py-3">
+                                        <li class="d-flex px-3">
+                                            <input id="input-search" type="text" placeholder="Search">
+                                            <i class="fas fa-search my-auto" id="search"></i>
+                                        </li>
 
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>@User.Identity.Name</li>
+                                <li>
+                                    <a asp-action="LogOut" asp-controller="Acoount">LogOut</a>
+                                </li>
+                            }
                             <li class="nav-item my-auto shop-cart">
                                 <i class="fas fa-shopping-bag"></i>
                                 <sup class="rounded-circle">@Model.Count</sup>

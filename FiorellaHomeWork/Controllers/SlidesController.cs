@@ -85,7 +85,7 @@ namespace FiorellaHomeWork.Controllers
         {
             if (id == null)
                 return NotFound();
-            var slide =  _context.Slides.Find(id);
+            Slide slide =  _context.Slides.Find(id);
             if (slide == null)
                 return NotFound();
             string resultpath = Path.Combine(_env.WebRootPath, "img", slide.Image);
@@ -94,19 +94,8 @@ namespace FiorellaHomeWork.Controllers
                 System.IO.File.Delete(resultpath);
             }
             var slider = _context.Slides.FirstOrDefault(s => s.Id == id);
-            if (slider == null)
-            {
-                return BadRequest();
-            }
-            else if (id != slider.Id)
-            {
-                return BadRequest();
-            }
-
-            string environment = _env.WebRootPath;
-            string folderPath = Path.Combine(environment, "img", slide.Image);
-            FileInfo file = new FileInfo(folderPath);
-            file.Delete();
+           
+           
             _context.Slides.Remove(slide);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
